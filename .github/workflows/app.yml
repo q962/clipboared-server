@@ -1,9 +1,7 @@
 name: App
 
 on:
-  push:
-    tags:
-      - v*.*.*
+  push
 
 defaults:
   run:
@@ -12,6 +10,7 @@ defaults:
 jobs:
   windows-and-android:
     runs-on: windows-latest
+    environment: production
 
     steps:
       - uses: actions/checkout@v4

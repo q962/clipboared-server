@@ -1,0 +1,9 @@
+client_ip.c
+Clipboard.c
+clipdata_manager.c
+ditto.c
+luafuns.c
+main.c
+start.c
+tray.c
+utils/res-utils.c

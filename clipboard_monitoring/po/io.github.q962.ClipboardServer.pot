@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the io.github.q962.ClipboardServer package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: io.github.q962.ClipboardServer\n"
+"Report-Msgid-Bugs-To: https://gitlab.gnome.org/GNOME/gtk/-/issues/\n"
+"POT-Creation-Date: 2024-12-25 23:04+0800\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: Clipboard.c:141
+#, c-format
+msgid "读取的大小和需求不一致: %d %lu"
+msgstr ""
+
+#: clipdata_manager.c:205
+msgid "行数限制: "
+msgstr ""
+
+#: ditto.c:267
+msgid "打开"
+msgstr ""
+
+#: ditto.c:271
+msgid "需要选择正确的 Ditto.ditto_db 文件路径才会生效"
+msgstr ""
+
+#: main.c:339
+msgid "剪切板服务管理"
+msgstr ""
+
+#: main.c:350
+msgid "IP 绑定"
+msgstr ""
+
+#: main.c:392
+msgid "设置端口号，为 0 时随机分配"
+msgstr ""
+
+#: main.c:429
+msgid "数据来源"
+msgstr ""
+
+#: main.c:434
+msgid "自管理"
+msgstr ""
+
+#: main.c:716
+#, c-format
+msgid "端口绑定：%s:%s"
+msgstr ""
+
+#: main.c:743
+#, c-format
+msgid "错误：%s:%s √"
+msgstr ""
+
+#: tray.c:87
+msgid "剪切板服务配置"
+msgstr ""
+
+#: tray.c:125
+msgid "退出"
+msgstr ""
+
+#: utils/res-utils.c:97
+#, c-format
+msgid "启动程序失败，未能获取程序路径: %s"
+msgstr ""

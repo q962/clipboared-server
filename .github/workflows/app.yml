@@ -47,10 +47,11 @@ jobs:
           echo $CONFIG_PATH
 
       - run : echo $LUAROCKS_CONFIG
-
-      - run: xmake -vD && xmake install -o build/OUT
+      - run : echo $LUAROCKS_CONFIG
         env:
           LUAROCKS_CONFIG: ${{ env.LUAROCKS_CONFIG }}
+
+      - run: xmake -vD && xmake install -o build/OUT
 
       - run: mkdir artifacts
 

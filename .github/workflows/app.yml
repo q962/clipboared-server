@@ -38,6 +38,9 @@ jobs:
 
       - run: env
 
+      - run: env
+        shell: msys2 {0}
+
       - run: xmake && xmake install -o build/OUT
         shell: msys2 {0}
 

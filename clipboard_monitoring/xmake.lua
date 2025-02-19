@@ -35,6 +35,7 @@ if is_host("windows") then
         add_files("src/start.c")
         add_ldflags("-mwindows")
         add_deps("rc")
+        add_defines("UNICODE")
 
         on_install(function(target)
             local installdir = path.absolute(target:installdir())

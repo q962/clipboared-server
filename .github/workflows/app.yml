@@ -5,7 +5,7 @@ on:
 
 defaults:
   run:
-    shell: msys2 {0}
+    shell: bash
 
 jobs:
   windows-and-android:
@@ -19,10 +19,10 @@ jobs:
           node-version: "latest"
           cache: "npm"
           cache-dependency-path: web
-      - uses: xmake-io/github-action-setup-xmake@v1
-        with:
-          xmake-version: "2.9.8"
-          build-cache: true
+      # - uses: xmake-io/github-action-setup-xmake@v1
+      #   with:
+      #     xmake-version: "2.9.8"
+      #     build-cache: true
       - uses: msys2/setup-msys2@v2
         with:
           msystem: mingw64
@@ -33,10 +33,12 @@ jobs:
             mingw-w64-x86_64-sqlite3
             mingw-w64-x86_64-imagemagick
             mingw-w64-x86_64-luajit
+            mingw-w64-xmake
 
       - run: xmake && xmake install -o build/OUT
+        shell: msys2 {0}
 
-      - run: mk artifacts
+      - run: mkdir artifacts
 
       - name: Check for changes in web/
         run: |

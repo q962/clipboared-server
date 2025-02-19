@@ -40,10 +40,8 @@ jobs:
           path-type: inherit
 
       - run: luarocks install penlight
-        # shell: msys2 {0}
 
       - run: xmake -vD && xmake install -o build/OUT
-        # shell: msys2 {0}
 
       - run: mkdir artifacts
 

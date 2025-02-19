@@ -41,7 +41,11 @@ jobs:
 
       - run: luarocks install penlight
 
+      - run: echo "LUAROCKS_CONFIG=$(luarocks config config_files.system.file)" >> $GITHUB_ENV
+
       - run: xmake -vD && xmake install -o build/OUT
+        env:
+          LUAROCKS_CONFIG: ${{ env.LUAROCKS_CONFIG }}
 
       - run: mkdir artifacts
 

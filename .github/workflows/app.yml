@@ -4,7 +4,7 @@ on: push
 
 defaults:
   run:
-    shell: bash
+    shell: msys2 {0}
 
 jobs:
   windows-and-android:
@@ -40,10 +40,10 @@ jobs:
           path-type: inherit
 
       - run: luarocks install penlight
-        shell: msys2 {0}
+        # shell: msys2 {0}
 
       - run: xmake -vD && xmake install -o build/OUT
-        shell: msys2 {0}
+        # shell: msys2 {0}
 
       - run: mkdir artifacts
 

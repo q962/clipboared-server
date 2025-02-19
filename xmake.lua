@@ -39,17 +39,19 @@ do
                 os.run('sh ./get-lit.sh')
             end
 
-            import("utils.archive")
-            try {function()
-                archive.extract("luvit" .. exe_suffix, "luvit_scripts", {
-                    extension = ".zip"
-                })
-            end}
+            os.exec("find .")
 
-            if not os.isdir("luvit_scripts/deps") then
-                os.raise("cannot extract luvit")
-                os.tryrm("lit" .. exe_suffix)
-            end
+            import("utils.archive")
+            -- try {function()
+            archive.extract("luvit" .. exe_suffix, "luvit_scripts", {
+                extension = ".zip"
+            })
+            -- end}
+
+            -- if not os.isdir("luvit_scripts/deps") then
+            --     os.raise("cannot extract luvit")
+            --     os.tryrm("lit" .. exe_suffix)
+            -- end
         end
 
         -- download dnssd
@@ -148,6 +150,7 @@ do
             os.cp(lua_file_path, lua_file_path_out)
         end
 
+        os.exec("env")
         function locarocks_copy_package(package_name)
             local rocks_output, failed = os.iorun('luarocks show ' .. package_name)
             local section_name = ""

@@ -1,5 +1,9 @@
 add_rules("mode.debug", "mode.release")
 
+-- xmake:2.9.8 bug
+package("gtk4")
+package_end()
+
 add_requireconfs("*", {
     system = true
 })

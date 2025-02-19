@@ -28,13 +28,15 @@ jobs:
             mingw-w64-x86_64-7zip
             mingw-w64-x86_64-gcc
             mingw-w64-x86_64-pkg-config
+            mingw-w64-x86_64-MinHook
+            mingw-w64-x86_64-xmake
             mingw-w64-x86_64-gtk4
             mingw-w64-x86_64-libadwaita
             mingw-w64-x86_64-sqlite3
             mingw-w64-x86_64-imagemagick
             mingw-w64-x86_64-luajit
-            mingw-w64-x86_64-xmake
             git
+          path-type: inherit
 
       - run: xmake -vD && xmake install -o build/OUT
         shell: msys2 {0}

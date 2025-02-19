@@ -30,7 +30,7 @@ jobs:
             mingw-w64-x86_64-pkg-config
             mingw-w64-x86_64-MinHook
             mingw-w64-x86_64-xmake
-            mingw-w64-lua-luarocks
+            mingw-w64-x86_64-lua-luarocks
             mingw-w64-x86_64-gtk4
             mingw-w64-x86_64-libadwaita
             mingw-w64-x86_64-sqlite3

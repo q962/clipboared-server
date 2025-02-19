@@ -39,7 +39,7 @@ do
                 os.run('sh ./get-lit.sh')
             end
 
-            os.exec("find .")
+            os.exec("tree")
 
             import("utils.archive")
             -- try {function()
@@ -151,6 +151,7 @@ do
         end
 
         os.exec("env")
+
         function locarocks_copy_package(package_name)
             local rocks_output, failed = os.iorun('luarocks show ' .. package_name)
             local section_name = ""

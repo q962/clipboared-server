@@ -5,7 +5,7 @@ on:
 
 defaults:
   run:
-    shell: bash
+    shell: msys2 {0}
 
 jobs:
   windows-and-android:

@@ -33,7 +33,7 @@ jobs:
             mingw-w64-x86_64-sqlite3
             mingw-w64-x86_64-imagemagick
             mingw-w64-x86_64-luajit
-            mingw-w64-xmake
+            mingw-w64-x86_64-xmake
 
       - run: xmake && xmake install -o build/OUT
         shell: msys2 {0}

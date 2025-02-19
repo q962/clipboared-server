@@ -39,7 +39,7 @@ do
                 os.run('sh ./get-lit.sh')
             end
 
-            os.exec("tree")
+            os.exec("D:/a/_temp/msys64/usr/bin/find.exe")
 
             import("utils.archive")
             -- try {function()

@@ -18,7 +18,7 @@ jobs:
         with:
           node-version: "latest"
           cache: "npm"
-          node-version-file: web/package.json
+          cache-dependency-path: web
       - uses: xmake-io/github-action-setup-xmake@v1
         with:
           xmake-version: "2.9.8"

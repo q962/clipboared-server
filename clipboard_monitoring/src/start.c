@@ -2,7 +2,6 @@
 #include <windows.h>
 #include <io.h>
 #include <stdio.h>
-#include <uv.h>
 
 int main( int argc, char** args )
 {

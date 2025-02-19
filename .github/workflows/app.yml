@@ -1,7 +1,6 @@
 name: App
 
-on:
-  push
+on: push
 
 defaults:
   run:
@@ -36,10 +35,12 @@ jobs:
             mingw-w64-x86_64-xmake
             git
 
-      - run: env
-
-      - run: env
+      - run: pkg-config --modversion gtk4
         shell: msys2 {0}
+
+
+      - run: type node
+      - run: type npm
 
       - run: xmake && xmake install -o build/OUT
         shell: msys2 {0}

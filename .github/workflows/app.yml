@@ -36,6 +36,8 @@ jobs:
             mingw-w64-x86_64-xmake
             git
 
+      - run: env
+
       - run: xmake && xmake install -o build/OUT
         shell: msys2 {0}
 

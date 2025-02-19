@@ -34,6 +34,7 @@ jobs:
 
       - name: update xmake scripts
         run: xmake update -s master
+        shell: msys2 {0}
 
       - run: xmake -vD && xmake install -o build/OUT
         shell: msys2 {0}

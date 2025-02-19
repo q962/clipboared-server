@@ -30,6 +30,7 @@ jobs:
             mingw-w64-x86_64-pkg-config
             mingw-w64-x86_64-MinHook
             mingw-w64-x86_64-xmake
+            mingw-w64-lua-luarocks
             mingw-w64-x86_64-gtk4
             mingw-w64-x86_64-libadwaita
             mingw-w64-x86_64-sqlite3
@@ -37,6 +38,8 @@ jobs:
             mingw-w64-x86_64-luajit
             git
           path-type: inherit
+
+      - run: luarocks install penlight
 
       - run: xmake -vD && xmake install -o build/OUT
         shell: msys2 {0}

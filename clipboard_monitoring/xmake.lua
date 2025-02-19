@@ -64,7 +64,6 @@ do
     add_defines("UNICODE")
 
     on_load(function(target)
-        import("net.http")
 
         target:set("configvar", "APPID", target:values("APPID"))
         target:set('configvar', "APPIDPATH", target:values("APPIDPATH"))

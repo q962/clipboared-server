@@ -44,12 +44,6 @@ jobs:
       - run: |
           CONFIG_PATH="$(luarocks config config_files.system.file)"
           echo "LUAROCKS_CONFIG=$CONFIG_PATH" >> $GITHUB_ENV
-          echo $CONFIG_PATH
-
-      - run : echo $LUAROCKS_CONFIG
-      - run : echo $LUAROCKS_CONFIG
-        env:
-          LUAROCKS_CONFIG: ${{ env.LUAROCKS_CONFIG }}
 
       - run: xmake -vD && xmake install -o build/OUT
 

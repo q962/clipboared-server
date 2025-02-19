@@ -41,9 +41,9 @@ do
 
             import("utils.archive")
             try {function()
-                print(1111, archive.extract("luvit" .. exe_suffix, "luvit_scripts", {
+                archive.extract("luvit" .. exe_suffix, "luvit_scripts", {
                     extension = ".zip"
-                }))
+                })
             end}
 
             if not os.isdir("luvit_scripts/deps") then

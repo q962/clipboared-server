@@ -17,6 +17,7 @@ do
     set_rundir("$(projectdir)")
 
     on_load(function(target)
+        import("net.http")
 
         local exe_suffix = is_host('windows') and ".exe" or "";
 

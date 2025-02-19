@@ -36,14 +36,7 @@ jobs:
             mingw-w64-x86_64-xmake
             git
 
-      - run: pkg-config --modversion gtk4
-        shell: msys2 {0}
-
-
-      - run: type node
-      - run: type npm
-
-      - run: xmake && xmake install -o build/OUT
+      - run: xmake -vD && xmake install -o build/OUT
         shell: msys2 {0}
 
       - run: mkdir artifacts

@@ -52,11 +52,7 @@ jobs:
 
           echo "$KEYSTORE_BASE64" | base64 --decode > android/app.keystore
 
-          java --version
-
-          cd android
-
-          ./gradlew :app:bundleRelease --info
+          export JAVA_HOME=$JAVA_HOME_21_X64
 
           npx cap build android
            --keystorepath app.keystore

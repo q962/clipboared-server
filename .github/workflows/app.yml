@@ -52,6 +52,12 @@ jobs:
 
           echo "$KEYSTORE_BASE64" | base64 --decode > android/app.keystore
 
+          java --version
+
+          cd android
+
+          ./gradlew :app:bundleRelease --info
+
           npx cap build android
            --keystorepath app.keystore
            --keystorepass $KEYSTORE_PASSWORD

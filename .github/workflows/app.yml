@@ -41,21 +41,11 @@ jobs:
 
       - run: luarocks install penlight
 
-      # - run: |
-      #     CONFIG_PATH="$(luarocks config config_files.system.file)"
-      #     echo "LUAROCKS_CONFIG=$CONFIG_PATH" >> $GITHUB_ENV
-
       - run: xmake -vD && xmake install -o build/OUT
 
       - run: mkdir artifacts
 
-      - name: Check for changes in web/
-        run: |
-          CHANGES=$(git diff --name-only HEAD~1 HEAD | grep -q '^web/' && echo "true" || echo "false")
-          echo "web_changed=$CHANGES" >> $GITHUB_ENV
-
-      - if: env.web_changed == 'true'
-        run: >
+      - run: >
           npm run build-app || exit 1
 
           npx cap sync || exit 1

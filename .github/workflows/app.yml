@@ -60,7 +60,7 @@ jobs:
           --keystorealias $KEY_ALIAS
           --keystorealiaspass $KEY_PASSWORD || exit 1
 
-          cp android/app/build/outputs/apk/release/app-release-signed.apk ../artifacts/app.apk
+          cp android/app/build/outputs/bundle/release/app-release-signed.aab ../artifacts/app.aab
         working-directory: web
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}

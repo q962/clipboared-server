@@ -137,7 +137,7 @@ do
         os.exec("env")
 
         function locarocks_copy_package(package_name)
-            local rocks_output, failed = os.iorun('luarocks show ' .. package_name)
+            local rocks_output, failed = os.iorun('env luarocks show ' .. package_name)
             local section_name = ""
 
             local up_section_name = "";

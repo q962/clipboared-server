@@ -45,6 +45,8 @@ jobs:
           CONFIG_PATH="$(luarocks config config_files.system.file)"
           echo "LUAROCKS_CONFIG=$CONFIG_PATH" >> $GITHUB_ENV
 
+      - run: luarocks show penlight
+
       - run: xmake -vD && xmake install -o build/OUT
 
       - run: mkdir artifacts

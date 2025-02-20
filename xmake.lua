@@ -10,6 +10,8 @@ set_values('APPIDPATH', "/io/github/q962/ClipboardServer/")
 
 includes("clipboard_monitoring")
 
+local exe_suffix = is_host('windows') and ".exe" or "";
+
 target("default")
 do
     set_kind("phony")
@@ -18,8 +20,6 @@ do
 
     on_load(function(target)
         import("net.http")
-
-        local exe_suffix = is_host('windows') and ".exe" or "";
 
         -- download files
         os.mkdir(target:targetdir() .. "/../bin")
@@ -38,20 +38,6 @@ do
                 http.download("https://github.com/luvit/lit/raw/master/get-lit.sh", "get-lit.sh")
                 os.run('sh ./get-lit.sh')
             end
-
-            os.exec("D:/a/_temp/msys64/usr/bin/find.exe")
-
-            import("utils.archive")
-            -- try {function()
-            archive.extract("luvit" .. exe_suffix, "luvit_scripts", {
-                extension = ".zip"
-            })
-            -- end}
-
-            -- if not os.isdir("luvit_scripts/deps") then
-            --     os.raise("cannot extract luvit")
-            --     os.tryrm("lit" .. exe_suffix)
-            -- end
         end
 
         -- download dnssd
@@ -96,8 +82,6 @@ do
         setenvs = envs.post
 
         local args = table.wrap(option.get("arguments") or target:get("runargs"))
-
-        local exe_suffix = is_host('windows') and ".exe" or "";
 
         local luvit_path = target:targetdir() .. "/../bin/luvit"
 
@@ -194,6 +178,12 @@ do
 
         locarocks_copy_package("penlight")
 
+        import("utils.archive")
+        archive.extract(target:targetdir() .. "/../bin/luvit" .. exe_suffix,
+            target:targetdir() .. "/../bin/luvit_scripts", {
+                extension = ".zip"
+            })
+
         local installdir = path.absolute(target:installdir())
         local installdir_bin = path.join(installdir, "bin")
         local installdir_share = path.join(installdir, "share")
@@ -203,7 +193,6 @@ do
         local root_path = installdir
         local lua_root_path = path.join(root_path, "lua");
         local other_bin_path = target:targetdir() .. "/../bin/"
-        local exe_suffix = is_host('windows') and ".exe" or "";
 
         local lit_exe = 'lit' .. exe_suffix
         local luvi_exe = 'luvi' .. exe_suffix

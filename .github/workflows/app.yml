@@ -49,7 +49,8 @@ jobs:
       - run: echo "$KEYSTORE_BASE64" | base64 --decode > android/app.keystore
         working-directory: web
 
-      - run: npx cap build android
+      - run: JAVA_HOME=$JAVA_HOME_21_X64
+          npx cap build android
           --keystorepath app.keystore
           --keystorepass $KEYSTORE_PASSWORD
           --keystorealias $KEY_ALIAS
@@ -60,7 +61,6 @@ jobs:
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
-          JAVA_HOME: ${{ env.JAVA_HOME_21_X64 }}
 
       - run: cp web/android/app/build/outputs/apk/release/app-release-signed.apk artifacts/app.apk
 

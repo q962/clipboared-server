@@ -39,7 +39,7 @@ jobs:
 
       - run: luarocks install penlight
 
-      - run: xmake -vD && xmake install -o build/OUT
+      - run: xmake g --network=private && xmake -vD && xmake install -o build/OUT
 
       - run: mkdir artifacts
 

@@ -10,7 +10,11 @@ set_values('APPIDPATH', "/io/github/q962/ClipboardServer/")
 
 includes("clipboard_monitoring")
 
+add_imports("xmake-modules.gnome")
+add_imports("xmake-modules.LoadEnv")
+
 local exe_suffix = is_host('windows') and ".exe" or "";
+local dll_suffix = is_host('windows') and ".dll" or ".so";
 
 target("default")
 do
@@ -59,6 +63,8 @@ do
         import("core.base.option")
         import("private.action.run.runenvs")
 
+        gnome.compile_schemas("clipboard_monitoring/res/glib-2.0/schemas")
+
         local envs = import("xmake-modules.LoadEnv")(target)
 
         local rundir = target:rundir()
@@ -80,6 +86,9 @@ do
         _join(envs.normal, envs.post);
         _join(setenvs, envs.post);
         setenvs = envs.post
+
+        setenvs.LUA_PATH = path.translate(os.iorun("env luarocks path --lr-path")):trim()
+        setenvs.LUA_CPATH = path.absolute(target:targetdir()) .. "/?" .. dll_suffix
 
         local args = table.wrap(option.get("arguments") or target:get("runargs"))
 
@@ -108,105 +117,43 @@ do
         end
     end)
 
-    before_install(function(target)
-        local installdir = path.absolute(target:installdir())
-        local installdir_bin = path.join(installdir, "bin")
-        local installdir_share = path.join(installdir, "share")
-        local installdir_lib = path.join(installdir, "lib")
-
-        os.mkdir(installdir_bin)
-        os.mkdir(installdir_share)
-        os.mkdir(installdir_lib)
-    end)
-
     on_install(function(target)
 
-        function cp_module(module)
-            if not module then
-                return
-            end
-
-            local name = module:match("^%S+")
-            local lua_file_path = module:match("%((.-)%)")
-            local suffix = lua_file_path:match("(%.[^%.]+)$")
-            local lua_file_path_out = path.join(lua_root_path, "libs", name:gsub("[.]", "/") .. suffix);
-
-            os.cp(lua_file_path, lua_file_path_out)
-        end
-
-        os.exec("env")
-
-        function locarocks_copy_package(package_name)
-            local rocks_output, failed = os.iorun('env luarocks show ' .. package_name)
-            local section_name = ""
-
-            local up_section_name = "";
-            for _, line in ipairs(rocks_output:split("\n", {
-                strict = true
-            })) do
-                line = string.trim(line)
-
-                if line == 'Modules:' then
-                    section_name = "Modules"
-                    goto continue
-                elseif line == 'Depends on:' then
-                    section_name = "Depends"
-                    goto continue
-                elseif #line == 0 then
-                    if up_section_name == "Depends" then
-                        break
-                    end
-
-                    goto continue
-                end
-
-                up_section_name = section_name
-
-                if section_name == "Modules" then
-                    cp_module(line)
-                end
-                if section_name == "Depends" then
-                    local dep_name = line:match("^%S+")
-                    if dep_name ~= 'lua' then
-                        locarocks_copy_package(dep_name)
-                    end
-                end
-
-                ::continue::
-            end
-        end
-
-        locarocks_copy_package("penlight")
-
-        import("utils.archive")
-        archive.extract(target:targetdir() .. "/../bin/luvit" .. exe_suffix,
-            target:targetdir() .. "/../bin/luvit_scripts", {
-                extension = ".zip"
-            })
-
-        local installdir = path.absolute(target:installdir())
-        local installdir_bin = path.join(installdir, "bin")
-        local installdir_share = path.join(installdir, "share")
-        local installdir_app_share = path.join(installdir, "share", target:values("APPID"))
-        local installdir_lib = path.join(installdir, "lib")
-
-        local root_path = installdir
-        local lua_root_path = path.join(root_path, "lua");
+        local installdir = path.absolute(target:installdir()) .. "/"
+        local installdir_bin = path.join(installdir, "bin") .. "/"
+        local installdir_share = path.join(installdir, "share") .. "/"
+        local installdir_app_share = path.join(installdir, "share", target:values("APPID")) .. "/"
+        local installdir_lib = path.join(installdir, "lib") .. "/"
+        local lua_root_path = path.join(installdir, "lua") .. "/"
+        local lua_libs_path = path.join(lua_root_path, "libs") .. "/"
         local other_bin_path = target:targetdir() .. "/../bin/"
 
         local lit_exe = 'lit' .. exe_suffix
         local luvi_exe = 'luvi' .. exe_suffix
         local dnssd_exe = 'dnssd' .. exe_suffix
 
-        os.trycp("./lua_server/*.lua", lua_root_path .. '/');
+        local deploy_lib_dir = string.trim(os.iorun("env luarocks config deploy_lib_dir"))
+        local deploy_lua_dir = string.trim(os.iorun("env luarocks config deploy_lua_dir"))
+        os.cp(deploy_lua_dir .. "/pl", lua_libs_path)
+        os.cp(deploy_lib_dir .. "/lfs.*", lua_libs_path)
+
+        try {function()
+            import("utils.archive")
+            archive.extract(target:targetdir() .. "/../bin/luvit" .. exe_suffix,
+                target:targetdir() .. "/../bin/luvit_scripts", {
+                    extension = ".zip"
+                })
+        end}
+
+        os.cp("./lua_server/*.lua", lua_root_path);
         os.rm(lua_root_path .. "/local-env.lua");
 
-        os.trycp(other_bin_path .. dnssd_exe, installdir_bin)
+        os.cp(other_bin_path .. dnssd_exe, installdir_bin)
 
-        os.trycp(target:dep("gtkclip"):targetfile(), lua_root_path .. '/libs/');
-        os.trycp(other_bin_path .. "/luvit_scripts/deps", lua_root_path)
-        os.trycp(other_bin_path .. lit_exe, installdir)
-        os.trycp(other_bin_path .. luvi_exe, installdir)
+        os.cp(target:dep("gtkclip"):targetfile(), lua_libs_path);
+        os.cp(other_bin_path .. "/luvit_scripts/deps", lua_root_path)
+        os.cp(other_bin_path .. lit_exe, installdir)
+        os.cp(other_bin_path .. luvi_exe, installdir)
 
         os.execv(other_bin_path .. lit_exe, {"make", "lua", "bin/ClipboaredServer" .. exe_suffix, luvi_exe}, {
             curdir = installdir

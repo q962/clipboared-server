@@ -60,8 +60,6 @@ do
     remove_files("src/start.c")
     add_configfiles("src/config.h.in")
     add_includedirs("$(buildir)")
-    add_imports("xmake-modules.gnome")
-    add_imports("xmake-modules.LoadEnv")
     add_defines("UNICODE")
 
     on_load(function(target)
@@ -95,8 +93,8 @@ do
     end)
 
     on_install(function(target)
-        local installdir = path.absolute(target:installdir())
-        local installdir_share = path.join(installdir, "share")
+        local installdir = path.absolute(target:installdir()) .. '/'
+        local installdir_share = path.join(installdir, "share") .. '/'
 
         os.cp(target:scriptdir() .. "/res/glib-2.0", installdir_share)
         os.cp(target:scriptdir() .. "/res/applications", installdir_share)

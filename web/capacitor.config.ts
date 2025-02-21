@@ -9,6 +9,11 @@ const config: CapacitorConfig = {
     CapacitorHttp: {
       enabled: true
     }
+  },
+  android: {
+    buildOptions: {
+      releaseType: 'APK'
+    }
   }
 }
 

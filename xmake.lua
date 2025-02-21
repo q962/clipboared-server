@@ -166,13 +166,15 @@ do
         local cmd_suffix = is_host('windows') and ".cmd" or "";
         local npm_exec = "npm" .. cmd_suffix
 
-        os.runv(npm_exec, {"install"}, {
-            curdir = "web"
-        })
-        os.runv(npm_exec, {"run", "build"}, {
-            curdir = "web"
-        })
+        if not os.isdir("web/dist") then
+            os.runv(npm_exec, {"install"}, {
+                curdir = "web"
+            })
+            os.runv(npm_exec, {"run", "build"}, {
+                curdir = "web"
+            })
 
-        os.cp("web/dist", installdir_app_share .. "/web")
+            os.cp("web/dist", installdir_app_share .. "/web")
+        end
     end)
 end

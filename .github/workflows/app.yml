@@ -45,7 +45,7 @@ jobs:
 
       - name: build Android
         run: >
-          npm run build-app && npx cap sync
+          npm run build-app && npx cap sync || exit 1
 
           export JAVA_HOME=$JAVA_HOME_21_X64
 
@@ -56,8 +56,9 @@ jobs:
           --keystorepass $KEYSTORE_PASSWORD
           --keystorealias $KEY_ALIAS
           --keystorealiaspass $KEY_PASSWORD
+          || exit 1
 
-          cp android/app/build/outputs/apk/release/app-release-signed.apk artifacts/app.apk
+          cp android/app/build/outputs/apk/release/app-release-signed.apk ../artifacts/app.apk
         working-directory: web
         env:
           KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}

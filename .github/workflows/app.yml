@@ -2,14 +2,13 @@ name: App
 
 on: push
 
-defaults:
-  run:
-    shell: msys2 {0}
-
 jobs:
   windows-and-android:
     runs-on: windows-latest
     environment: production
+    defaults:
+      run:
+        shell: msys2 {0}
 
     steps:
       - uses: actions/checkout@v4

@@ -699,26 +699,6 @@ static LRESULT CALLBACK _clipboard_window_proc( HWND hwnd, UINT message, WPARAM 
 	return retval;
 }
 
-#endif
-
-#endif
-
-#if 1  // base class virtual function
-
-static void clipboard_dispose( GObject* object )
-{
-	Clipboard* self = ( Clipboard* )object;
-
-	G_OBJECT_CLASS( clipboard_parent_class )->dispose( object );
-}
-
-static void clipboard_finalize( GObject* object )
-{
-	Clipboard* self = ( Clipboard* )object;
-
-	G_OBJECT_CLASS( clipboard_parent_class )->finalize( object );
-}
-
 static gpointer _create_clipboard_window_thread( Clipboard* clipboard )
 {
 	WNDCLASS wclass = { 0 };
@@ -752,6 +732,26 @@ static gpointer _create_clipboard_window_thread( Clipboard* clipboard )
 static void _create_clipboard_window( Clipboard* clipboard )
 {
 	g_thread_new( NULL, ( GThreadFunc )_create_clipboard_window_thread, clipboard );
+}
+
+#endif
+
+#endif
+
+#if 1  // base class virtual function
+
+static void clipboard_dispose( GObject* object )
+{
+	Clipboard* self = ( Clipboard* )object;
+
+	G_OBJECT_CLASS( clipboard_parent_class )->dispose( object );
+}
+
+static void clipboard_finalize( GObject* object )
+{
+	Clipboard* self = ( Clipboard* )object;
+
+	G_OBJECT_CLASS( clipboard_parent_class )->finalize( object );
 }
 
 static void clipboard_init( Clipboard* self )
